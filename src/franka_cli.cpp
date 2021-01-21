@@ -19,7 +19,11 @@ int main(int argc, char** argv)
     }
     try {
         cartesian_franka::Robot robot(argv[1]);
+        std::cout<<"Starting position:" << robot.position().translation().transpose() << std::endl;
+        std::cout<<"Moving to the init position..." << std::endl;
         robot.init();
+        std::cout<<"Init position:" << robot.position().translation().transpose() << std::endl;
+        
     }
     catch (const franka::Exception& e) {
         std::cout << e.what() << std::endl;

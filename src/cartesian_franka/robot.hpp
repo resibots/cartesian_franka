@@ -10,12 +10,12 @@
 namespace cartesian_franka { // cf = cartesian_franka
     class Robot {
     public:
-        using Vector7d = Eigen::Matrix<double, 7, 1, Eigen::ColMajor>;
 
         /// take the IP of the robot as input
         Robot(const std::string& ip) : _robot(ip.c_str())
         {
             _set_default_behavior();
+            init();
         }
 
         /// go to the starting position using joint positions
@@ -23,18 +23,10 @@ namespace cartesian_franka { // cf = cartesian_franka
 
         // move to a position + rotation
         void move_cartesian_relative(const Eigen::Affine3d& end_position, double duration = -1);
-        void move_cartesian_relative(const Eigen::Vector3d& end_position, const Eigen::Vector3d& rpy, double duration = -1)
-        {
-            Eigen::Affine3d t = Eigen::Translation3d(end_position)
-                * Eigen::AngleAxisd(rpy[0] * M_PI, Eigen::Vector3d::UnitX())
-                * Eigen::AngleAxisd(rpy[1] * M_PI, Eigen::Vector3d::UnitY())
-                * Eigen::AngleAxisd(rpy[2] * M_PI, Eigen::Vector3d::UnitZ());
-            assert(t.translation() == end_position);
-            move_cartesian_relative(t, duration);
-        }
+        void move_cartesian_relative(const Eigen::Vector3d& end_position, const Eigen::Vector3d& rpy, double duration = -1);
 
         // move to a joint position
-        void move_joint_absolute(const Vector7d& joint_positions);
+        void move_joint_absolute(const std::array<double, 7>& joint_positions, double duration);
 
         /// end-effector transform (position & rotation)
         Eigen::Affine3d position();
