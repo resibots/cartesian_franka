@@ -29,7 +29,9 @@ namespace cartesian_franka { // cf = cartesian_franka
         void move_joint_absolute(const std::array<double, 7>& joint_positions, double duration);
 
         /// end-effector transform (position & rotation)
-        Eigen::Affine3d position();
+        Eigen::Affine3d affine3d();
+        Eigen::Vector3d position();
+        Eigen::Vector3d orientation();
 
         /// the libfranka robot if needed for other functions
         const franka::Robot& franka() const { return _robot; }

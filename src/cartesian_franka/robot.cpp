@@ -49,7 +49,18 @@ namespace cartesian_franka {
         _robot.control(joint_motion_generator);
     }
 
-    Eigen::Affine3d Robot::position()
+    Eigen::Vector3d Robot::position()
+    {
+        return affine3d().translation();
+    }
+
+    Eigen::Vector3d Robot::orientation()
+    {
+        Eigen::Quaterniond q(affine3d().linear());
+        return q.toRotationMatrix().eulerAngles(0, 1, 2);
+    }
+
+    Eigen::Affine3d Robot::affine3d()
     {
         franka::RobotState robot_state = _robot.readOnce();
         Eigen::Matrix4d m; // = Eigen::Matrix4d::Map(robot_state.O_T_EE.data());
@@ -60,7 +71,7 @@ namespace cartesian_franka {
         assert(transform.translation()[0] == robot_state.O_T_EE_c[12]);
         assert(transform.translation()[1] == robot_state.O_T_EE_c[13]);
         assert(transform.translation()[2] == robot_state.O_T_EE_c[14]);
-        return transform; //automatic conversion
+        return transform;
     }
 
 } // namespace cartesian_franka
