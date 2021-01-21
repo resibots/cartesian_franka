@@ -26,7 +26,10 @@ namespace cartesian_franka {
             _target_rotation = Eigen::Quaterniond(_target.linear()) * _i_rotation; //relative
             assert(_i_transform.translation()[0] == robot_state.O_T_EE_c[12]);
             assert(_i_transform.translation()[1] == robot_state.O_T_EE_c[13]);
-            assert(_i_transform.translation()[2] == robot_state.O_T_EE_c[14]);            
+            assert(_i_transform.translation()[2] == robot_state.O_T_EE_c[14]);
+            if (_duration == -1)
+                _duration = (_i_translation - _target.translation()).norm() / 0.10; // 10 cm/s by default
+            std::cout<<"duration:"<<_duration<<std::endl;
         }
 
         // interpolate

@@ -11,9 +11,12 @@ namespace cartesian_franka {
     class CartesianMotionGenerator {
     public:
         ///movements are relative !
-        CartesianMotionGenerator(const Eigen::Affine3d& target, double duration) : _target(target), _duration(duration), _time(0) {}
+        CartesianMotionGenerator(const Eigen::Affine3d& target, double duration = -1)
+            : _target(target), _duration(duration), _time(0) {
+            }
 
         franka::CartesianPose operator()(const franka::RobotState& robot_state, franka::Duration period);
+
     protected:
         void _init(const franka::RobotState& robot_state);
         double _traj(double time, double duration) const;

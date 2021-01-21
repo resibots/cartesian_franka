@@ -22,15 +22,15 @@ namespace cartesian_franka { // cf = cartesian_franka
         void init(double duration = 0.5);
 
         // move to a position + rotation
-        void move_cartesian_relative(const Eigen::Affine3d& end_position);
-        void move_cartesian_relative(const Eigen::Vector3d& end_position, const Eigen::Vector3d& rpy)
+        void move_cartesian_relative(const Eigen::Affine3d& end_position, double duration = -1);
+        void move_cartesian_relative(const Eigen::Vector3d& end_position, const Eigen::Vector3d& rpy, double duration = -1)
         {
             Eigen::Affine3d t = Eigen::Translation3d(end_position)
                 * Eigen::AngleAxisd(rpy[0] * M_PI, Eigen::Vector3d::UnitX())
                 * Eigen::AngleAxisd(rpy[1] * M_PI, Eigen::Vector3d::UnitY())
                 * Eigen::AngleAxisd(rpy[2] * M_PI, Eigen::Vector3d::UnitZ());
             assert(t.translation() == end_position);
-            move_cartesian_relative(t);
+            move_cartesian_relative(t, duration);
         }
 
         // move to a joint position
