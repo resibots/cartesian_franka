@@ -28,7 +28,7 @@ namespace cartesian_franka { // cf = cartesian_franka
         void move(const Eigen::Affine3d& transform_delta, double duration = -1);
 
         // move to a joint position
-        void move_joints(const std::array<double, 7>& joint_positions, double duration);
+        void move_joints(const std::array<double, 7>& joint_positions, double duration = 1);
 
         /// end-effector transform (position & rotation)
         Eigen::Affine3d affine3d();
