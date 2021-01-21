@@ -43,7 +43,6 @@ namespace cartesian_franka {
         move(t, duration);
     }
 
-
     void Robot::rotate(const Eigen::Vector3d& rpy, double duration)
     {
         Eigen::Quaterniond q = Eigen::AngleAxisd(rpy[0] * M_PI, Eigen::Vector3d::UnitX())
@@ -54,6 +53,12 @@ namespace cartesian_franka {
 
     }
 
+     void Robot::translate(const Eigen::Vector3d& delta, double duration)
+    {    
+        Eigen::Affine3d t = Eigen::Affine3d::Identity();
+        t.translation() = delta;
+        move(t, duration);
+    }
 
     void Robot::move_joints(const std::array<double, 7>& joint_positions, double duration)
     {

@@ -21,11 +21,11 @@ namespace cartesian_franka { // cf = cartesian_franka
         /// go to the starting position using joint positions
         void init(double duration = 0.5);
 
-        // all these function are relative to the current position
-        void translate(const Eigen::Vector3d& end_position, double duration = -1);
+        // all these function are relative to the current position/orientation
+        void translate(const Eigen::Vector3d& delta, double duration = -1);
         void rotate(const Eigen::Vector3d& rpy, double duration = -1);
-        void move(const Eigen::Vector3d& end_position, const Eigen::Vector3d& rpy, double duration = -1);
-        void move(const Eigen::Affine3d& transform, double duration = -1);
+        void move(const Eigen::Vector3d& delta, const Eigen::Vector3d& rpy, double duration = -1);
+        void move(const Eigen::Affine3d& transform_delta, double duration = -1);
 
         // move to a joint position
         void move_joints(const std::array<double, 7>& joint_positions, double duration);
