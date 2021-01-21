@@ -27,19 +27,19 @@ namespace cartesian_franka {
         move_joints(q_goal, 0.5);
     }
 
-    void Robot::move(const Eigen::Affine3d& end_position, double duration)
+    void Robot::move(const Eigen::Affine3d& delta, double duration)
     {
-        CartesianMotionGenerator generator(end_position, duration);
+        CartesianMotionGenerator generator(delta, duration);
         _robot.control(generator);
     }
 
-    void Robot::move(const Eigen::Vector3d& end_position, const Eigen::Vector3d& rpy, double duration)
+    void Robot::move(const Eigen::Vector3d& delta, const Eigen::Vector3d& rpy, double duration)
     {
-        Eigen::Affine3d t = Eigen::Translation3d(end_position)
+        Eigen::Affine3d t = Eigen::Translation3d(delta)
             * Eigen::AngleAxisd(rpy[0] * M_PI, Eigen::Vector3d::UnitX())
             * Eigen::AngleAxisd(rpy[1] * M_PI, Eigen::Vector3d::UnitY())
             * Eigen::AngleAxisd(rpy[2] * M_PI, Eigen::Vector3d::UnitZ());
-        assert(t.translation() == end_position);
+        assert(t.translation() == delta);
         move(t, duration);
     }
 
