@@ -24,26 +24,38 @@ namespace cartesian_franka {
     void Robot::init(double duration)
     {
         std::array<double, 7> q_goal = {{0, -M_PI_4, 0, -3 * M_PI_4, 0, M_PI_2, 0}};
-        move_joint_absolute(q_goal, 0.5);
+        move_joints(q_goal, 0.5);
     }
 
-    void Robot::move_cartesian_relative(const Eigen::Affine3d& end_position, double duration)
+    void Robot::move(const Eigen::Affine3d& end_position, double duration)
     {
         CartesianMotionGenerator generator(end_position, duration);
         _robot.control(generator);
     }
 
-    void Robot::move_cartesian_relative(const Eigen::Vector3d& end_position, const Eigen::Vector3d& rpy, double duration)
+    void Robot::move(const Eigen::Vector3d& end_position, const Eigen::Vector3d& rpy, double duration)
     {
         Eigen::Affine3d t = Eigen::Translation3d(end_position)
             * Eigen::AngleAxisd(rpy[0] * M_PI, Eigen::Vector3d::UnitX())
             * Eigen::AngleAxisd(rpy[1] * M_PI, Eigen::Vector3d::UnitY())
             * Eigen::AngleAxisd(rpy[2] * M_PI, Eigen::Vector3d::UnitZ());
         assert(t.translation() == end_position);
-        move_cartesian_relative(t, duration);
+        move(t, duration);
     }
 
-    void Robot::move_joint_absolute(const std::array<double, 7>& joint_positions, double duration)
+
+    void Robot::rotate(const Eigen::Vector3d& rpy, double duration)
+    {
+        Eigen::Quaterniond q = Eigen::AngleAxisd(rpy[0] * M_PI, Eigen::Vector3d::UnitX())
+            * Eigen::AngleAxisd(rpy[1] * M_PI, Eigen::Vector3d::UnitY())
+            * Eigen::AngleAxisd(rpy[2] * M_PI, Eigen::Vector3d::UnitZ());
+        Eigen::Affine3d t(q);
+        move(t, duration);
+
+    }
+
+
+    void Robot::move_joints(const std::array<double, 7>& joint_positions, double duration)
     {
         JointMotionGenerator joint_motion_generator(duration, joint_positions);
         _robot.control(joint_motion_generator);
