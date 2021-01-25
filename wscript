@@ -79,13 +79,6 @@ def configure(conf):
 
     conf.env['CXXFLAGS'] = conf.env['CXXFLAGS'] + all_flags.split(' ')
 
-    if len(conf.env.CXXFLAGS_DART) > 0:
-        if '-std=c++11' in conf.env['CXXFLAGS']:
-            conf.env['CXXFLAGS'].remove('-std=c++11')
-        if '-std=c++0x' in conf.env['CXXFLAGS']:
-            conf.env['CXXFLAGS'].remove('-std=c++0x')
-        conf.env['CXXFLAGS'] = conf.env['CXXFLAGS'] + conf.env.CXXFLAGS_DART
-    
     print(conf.env['CXXFLAGS'])
 
 def build(bld):
@@ -110,3 +103,12 @@ def build(bld):
                 use='cartesian_franka',
                 defines = defines,
                 target = 'franka_cli')
+
+    bld.program(features = 'c cshlib pyext',
+                source = './src/python.cpp',
+                includes = './src',
+                uselib  = 'PYBIND11 ' + libs,
+                use = 'cartesian_franka',
+                defines = defines,
+                target = 'pycartesian_franka')
+

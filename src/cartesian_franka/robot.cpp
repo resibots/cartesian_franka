@@ -1,9 +1,9 @@
 #include <Eigen/Core>
 #include <Eigen/Dense>
 
-#include "cartesian_motion_generator.hpp"
-#include "joint_motion_generator.hpp"
-#include "robot.hpp"
+#include "cartesian_franka/cartesian_motion_generator.hpp"
+#include "cartesian_franka/joint_motion_generator.hpp"
+#include "cartesian_franka/robot.hpp"
 
 namespace cartesian_franka {
     void Robot::_set_default_behavior()

@@ -12,10 +12,10 @@ namespace cartesian_franka { // cf = cartesian_franka
     public:
 
         /// take the IP of the robot as input
-        Robot(const std::string& ip) : _robot(ip.c_str())
+        Robot(const std::string& ip, double duration = 0.5) : _robot(ip.c_str())
         {
             _set_default_behavior();
-            init();
+            init(duration);
         }
 
         /// go to the starting position using joint positions

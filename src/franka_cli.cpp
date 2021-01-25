@@ -28,6 +28,7 @@ int main(int argc, char** argv)
         std::cout<<"Init position:" << robot.position().transpose() << std::endl;
         std::cout<<"Init Euler angles:" << robot.orientation().transpose() << std::endl;
 
+        robot.translate(Eigen::Vector3d(0.1, 0, 0));
 
     }
     catch (const franka::Exception& e) {

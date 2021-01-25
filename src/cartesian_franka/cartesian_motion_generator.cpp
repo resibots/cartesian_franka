@@ -41,7 +41,7 @@ namespace cartesian_franka {
         // put everything in a homogogenous matrix
         Eigen::Affine3d transform;
         transform.linear() = q.normalized().toRotationMatrix();
-        transform.translation() = _i_translation + delta;
+        transform.translation() = _i_translation + delta; // relative motion
 
         // copy to the array
         std::array<double, 16> new_pose;
