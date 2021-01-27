@@ -12,24 +12,25 @@ PYBIND11_MODULE(pycartesian_franka, m)
 
     using namespace cartesian_franka;
     py::class_<Robot>(m, "Robot")
-        .def(py::init<const std::string&, double>(),
+        .def(py::init<const std::string&, bool, double>(),
             py::arg("ip"),
-            py::arg("duration") = 0.5)
+            py::arg("auto_init") = true,
+            py::arg("speed_factor") = 0.5)
         .def("init", &Robot::init,
-            py::arg("duration") = 0.5)
+            py::arg("speed_factor") = 0.5)
         .def("translate", &Robot::translate,
             py::arg("delta"),
-            py::arg("duration") = 0.5)
+            py::arg("duration") = 5)
         .def("rotate", &Robot::rotate,
             py::arg("rpy"),
-            py::arg("duration") = 0.5)
+            py::arg("duration") = 5)
         .def("move", (void (Robot::*)(const Eigen::Vector3d&, const Eigen::Vector3d&, double)) & Robot::move,
             py::arg("delta"),
             py::arg("rpy"),
-            py::arg("duration") = 0.5)
+            py::arg("duration") = 5)
         .def("move", (void (Robot::*)(const Eigen::Affine3d&, double)) & Robot::move,
             py::arg("delta"),
-            py::arg("duration") = 0.5)
+            py::arg("duration") = 5)
         .def("affine3d", &Robot::affine3d)
         .def("position", &Robot::position)
         .def("orientation", &Robot::orientation);

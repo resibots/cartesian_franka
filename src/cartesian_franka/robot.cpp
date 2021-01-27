@@ -1,3 +1,4 @@
+#include <iostream>
 #include <Eigen/Core>
 #include <Eigen/Dense>
 
@@ -21,10 +22,10 @@ namespace cartesian_franka {
         _robot.setCartesianImpedance({{3000, 3000, 3000, 300, 300, 300}});
     }
 
-    void Robot::init(double duration)
+    void Robot::init(double speed_factor)
     {
         std::array<double, 7> q_goal = {{0, -M_PI_4, 0, -3 * M_PI_4, 0, M_PI_2, 0}};
-        move_joints(q_goal, 0.5);
+        move_joints(q_goal, speed_factor);
     }
 
     void Robot::move(const Eigen::Affine3d& delta, double duration)
@@ -54,15 +55,16 @@ namespace cartesian_franka {
     }
 
      void Robot::translate(const Eigen::Vector3d& delta, double duration)
-    {    
+    {
+        std::cout<<"translate to:"<<delta.transpose()<<" duration="<<duration<<std::endl;    
         Eigen::Affine3d t = Eigen::Affine3d::Identity();
         t.translation() = delta;
         move(t, duration);
     }
 
-    void Robot::move_joints(const std::array<double, 7>& joint_positions, double duration)
+    void Robot::move_joints(const std::array<double, 7>& joint_positions, double speed_factor)
     {
-        JointMotionGenerator joint_motion_generator(duration, joint_positions);
+        JointMotionGenerator joint_motion_generator(speed_factor, joint_positions);
         _robot.control(joint_motion_generator);
     }
 

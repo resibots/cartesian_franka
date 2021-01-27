@@ -12,14 +12,16 @@ namespace cartesian_franka { // cf = cartesian_franka
     public:
 
         /// take the IP of the robot as input
-        Robot(const std::string& ip, double duration = 0.5) : _robot(ip.c_str())
+        Robot(const std::string& ip, bool auto_init=true, double speed_factor = 0.5) 
+            : _robot(ip.c_str())
         {
             _set_default_behavior();
-            init(duration);
+            if (auto_init)
+              init(speed_factor);
         }
 
         /// go to the starting position using joint positions
-        void init(double duration = 0.5);
+        void init(double speed_factor = 0.5);
 
         // all these function are relative to the current position/orientation
         void translate(const Eigen::Vector3d& delta, double duration = -1);
