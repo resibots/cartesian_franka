@@ -37,18 +37,18 @@ namespace cartesian_franka {
     void Robot::move(const Eigen::Vector3d& delta, const Eigen::Vector3d& rpy, double duration)
     {
         Eigen::Affine3d t = Eigen::Translation3d(delta)
-            * Eigen::AngleAxisd(rpy[0] * M_PI, Eigen::Vector3d::UnitX())
-            * Eigen::AngleAxisd(rpy[1] * M_PI, Eigen::Vector3d::UnitY())
-            * Eigen::AngleAxisd(rpy[2] * M_PI, Eigen::Vector3d::UnitZ());
+            * Eigen::AngleAxisd(rpy[0], Eigen::Vector3d::UnitX())
+            * Eigen::AngleAxisd(rpy[1], Eigen::Vector3d::UnitY())
+            * Eigen::AngleAxisd(rpy[2], Eigen::Vector3d::UnitZ());
         assert(t.translation() == delta);
         move(t, duration);
     }
 
     void Robot::rotate(const Eigen::Vector3d& rpy, double duration)
     {
-        Eigen::Quaterniond q = Eigen::AngleAxisd(rpy[0] * M_PI, Eigen::Vector3d::UnitX())
-            * Eigen::AngleAxisd(rpy[1] * M_PI, Eigen::Vector3d::UnitY())
-            * Eigen::AngleAxisd(rpy[2] * M_PI, Eigen::Vector3d::UnitZ());
+        Eigen::Quaterniond q = Eigen::AngleAxisd(rpy[0], Eigen::Vector3d::UnitX())
+            * Eigen::AngleAxisd(rpy[1], Eigen::Vector3d::UnitY())
+            * Eigen::AngleAxisd(rpy[2], Eigen::Vector3d::UnitZ());
         Eigen::Affine3d t(q);
         move(t, duration);
 

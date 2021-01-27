@@ -97,12 +97,12 @@ def build(bld):
     
 
     bld.program(features = 'cxx',
-                source = "src/franka_cli.cpp",
+                source = "src/example.cpp",
                 includes = './src',
                 uselib =  libs,
                 use='cartesian_franka',
                 defines = defines,
-                target = 'franka_cli')
+                target = 'example')
 
     bld.program(features = 'c cshlib pyext',
                 source = './src/python.cpp',

@@ -29,6 +29,8 @@ int main(int argc, char** argv)
         std::cout<<"Init Euler angles:" << robot.orientation().transpose() << std::endl;
 
         robot.translate(Eigen::Vector3d(0.1, 0, 0));
+        robot.rotate(Eigen::Vector3d(M_PI / 4., 0, 0));
+
 
     }
     catch (const franka::Exception& e) {
