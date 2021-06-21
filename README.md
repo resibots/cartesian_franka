@@ -15,7 +15,13 @@ pip install pybind11
 ```
 - cartesian_franka
 ```
-cd cartesian_franak
+cd cartesian_franka
 ./waf configure --libfranka=$HOME --python
 ./waf
+```
+
+Do not forget to have $HOME/lib in your LD_LIBRARY_PATH:
+
+```
+export LD_LIBRARY_PATH=$HOME/lib:$LD_LIBRARY_PATH
 ```
