@@ -30,3 +30,10 @@
 *.exe
 *.out
 *.app
+
+# Waf stuff
+
+.waf*
+build/
+waf_tools/__pycache__/
+.lock-waf_linux_build
