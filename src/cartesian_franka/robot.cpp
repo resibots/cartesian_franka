@@ -56,7 +56,7 @@ namespace cartesian_franka {
 
      void Robot::translate(const Eigen::Vector3d& delta, double duration)
     {
-        std::cout<<"translate to:"<<delta.transpose()<<" duration="<<duration<<std::endl;    
+        // std::cout<<"translate to:"<<delta.transpose()<<" duration="<<duration<<std::endl;    
         Eigen::Affine3d t = Eigen::Affine3d::Identity();
         t.translation() = delta;
         move(t, duration);
@@ -91,6 +91,11 @@ namespace cartesian_franka {
         assert(transform.translation()[1] == robot_state.O_T_EE_c[13]);
         assert(transform.translation()[2] == robot_state.O_T_EE_c[14]);
         return transform;
+    }
+
+    void Robot::automaticErrorRecovery()
+    {
+        _robot.automaticErrorRecovery();
     }
 
 } // namespace cartesian_franka

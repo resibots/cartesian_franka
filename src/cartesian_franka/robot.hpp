@@ -40,6 +40,8 @@ namespace cartesian_franka { // cf = cartesian_franka
         /// the libfranka robot if needed for other functions
         const franka::Robot& franka() const { return _robot; }
 
+        void automaticErrorRecovery();
+
     protected:
         void _set_default_behavior();
         franka::Robot _robot;

@@ -33,5 +33,6 @@ PYBIND11_MODULE(pycartesian_franka, m)
             py::arg("duration") = 5)
         .def("affine3d", &Robot::affine3d)
         .def("position", &Robot::position)
-        .def("orientation", &Robot::orientation);
+        .def("orientation", &Robot::orientation)
+        .def("automaticErrorRecovery", &Robot::automaticErrorRecovery);
 }
