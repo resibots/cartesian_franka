@@ -30,7 +30,7 @@ namespace cartesian_franka {
             if (_duration == -1)
                 _duration = (_i_translation - _target.translation()).norm() / 0.10; // 10 cm/s by default
             assert(_duration > 0);
-            std::cout<<"duration:"<<_duration<<std::endl;
+            // std::cout<<"duration:"<<_duration<<std::endl;
         }
 
         // interpolate
